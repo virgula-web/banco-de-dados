@@ -1,0 +1,25 @@
+create table atores(
+nome varchar(200),
+idade int
+);
+
+
+create or replace function hello()
+returns trigger
+as
+$$
+  begin
+  raise notice 'olá ,% tudo bem' , new.nome;
+  return new;
+  end;
+
+$$
+language 'plpgsql'
+
+create trigger ola_ator before insert
+on atores
+for each row execute procedure hello()
+
+select * from atores
+
+insert into atores values('joao',25)

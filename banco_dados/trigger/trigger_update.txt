@@ -1,0 +1,50 @@
+create table atores(
+nome varchar(200),
+idade int
+);
+
+
+create or replace function hello()
+returns trigger
+as
+$$
+begin
+if new.idade <18 then
+raise notice '%,tudo bem?vocẽ tem % anos , portanto vocẽ é menor de idade .', new.nome , new.idade;
+else
+raise notice '%,tudo bem?vocẽ tem % anos , portanto vocẽ é maior de idade .', new.nome , new.idade;
+end if ;
+raise notice '% como vocẽ esta?' , new.nome;
+return new;
+end;
+
+$$
+language 'plpgsql'
+
+create or replace function altera_atores()
+returns trigger
+as
+$$
+begin
+raise notice 'seu nome %, e sua idade %', old.nome , old.idade;
+raise notice 'seu nome %, e sua idade %', new.nome , new.idade;
+return new;
+end;
+$$
+language 'plpgsql'
+
+create trigger altera_atores before update
+on atores
+for each row execute procedure hello()
+create trigger ola_ator before insert
+on atores
+for each row execute procedure hello()
+
+select * from atores
+
+insert into atores values('joao',25)
+
+update  atores
+set nome = 'ze' , idade = '15'
+where nome = 'joao'
+
