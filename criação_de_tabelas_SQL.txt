@@ -1,0 +1,66 @@
+CREATE TABLE produto (
+    ID_produto int,
+	preco numeric,
+	estoque numeric,
+	descricao varchar(50)
+);
+CREATE TABLE venda (
+	ID_cliente varchar(1),
+	ID_venda int,
+	status varchar(1),
+	data  date
+);
+CREATE TABLE parcelamento (
+    ID_parcela int,
+	ID_venda int,
+	data_vencimento date,
+	data_pagamento date,
+	valor numeric
+);
+CREATE TABLE itens (
+    ID_produto int,
+	ID_venda int,
+	precoItem numeric,
+	qtde numeric
+);
+CREATE TABLE cliente (
+    ID_cliente varchar(1),
+	nome varchar(50),
+	email varchar(50),
+	fone varchar(14)
+);
+
+
+
+
+
+
+
+
+ALTER TABLE cliente
+ADD CONSTRAINT id_cliente
+PRIMARY KEY (id_cliente)
+
+ALTER TABLE produto
+ADD CONSTRAINT id_produto
+PRIMARY KEY (id_produto)
+
+ALTER TABLE itens
+ADD CONSTRAINT id_produto
+FOREIGN KEY (id_produto)
+REFERENCES  produto(id_produto)
+
+ALTER TABLE venda
+ADD CONSTRAINT idVenda
+primary KEY (id_venda)
+
+ALTER TABLE itens
+ADD CONSTRAINT idvenda
+FOREIGN KEY (id_venda)
+REFERENCES  venda(id_venda)
+
+ALTER TABLE parcelamento
+ADD CONSTRAINT id_parcela
+PRIMARY KEY (id_parcela)
+
+
